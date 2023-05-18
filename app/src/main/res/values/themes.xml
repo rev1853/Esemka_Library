@@ -1,0 +1,53 @@
+<resources xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Base application theme. -->
+    <style name="Theme.GoLibrary" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/dark_coffee</item>
+        <item name="colorSecondaryVariant">@color/dark_coffee</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="InputLabel" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="DefaultInput" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:background">@drawable/bg_input</item>
+    </style>
+
+    <style name="DefaultButton" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="backgroundTint">@null</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="android:inset">0dp</item>
+        <item name="elevation">0dp</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="SecondaryButton" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="backgroundTint">@null</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/bg_button_secondary</item>
+        <item name="android:inset">0dp</item>
+        <item name="elevation">0dp</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="TextOnlyBottomNav">
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginTop">0dp</item>
+    </style>
+</resources>

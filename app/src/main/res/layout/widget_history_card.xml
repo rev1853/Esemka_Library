@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/history_container_rl"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="15dp"
+        android:background="@drawable/bg_book_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/history_period_tv"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:text="6 Sep 2022 - 10 Sep 2022"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/history_period_tv"
+            android:id="@+id/history_book_count_tv"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:text="3 Books"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/history_period_tv"
+            android:layout_marginTop="10dp"
+            android:id="@+id/history_status_tv"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:text="Borrowing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+</layout>

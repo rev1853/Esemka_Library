@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/book_card_container"
+        android:background="@drawable/bg_book_card"
+        android:paddingHorizontal="25dp"
+        android:paddingVertical="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/book_image_iv"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:src="@drawable/default_image_book"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:id="@+id/book_title_tv"
+            android:layout_below="@id/book_image_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Book Title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_centerHorizontal="true" />
+
+
+        <TextView
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:id="@+id/book_author_tv"
+            android:layout_below="@id/book_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Book Title"
+            android:textSize="18sp"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+</layout>

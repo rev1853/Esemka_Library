@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:background="@color/primary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="25dp">
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            style="@style/InputLabel"/>
+
+        <EditText
+            android:paddingHorizontal="10dp"
+            android:id="@+id/name_et"
+            android:inputType="text"
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            style="@style/DefaultInput"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            style="@style/InputLabel"/>
+
+        <EditText
+            android:paddingHorizontal="10dp"
+            android:id="@+id/password_et"
+            android:inputType="textPassword"
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            style="@style/DefaultInput"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirm Password"
+            style="@style/InputLabel"/>
+
+        <EditText
+            android:paddingHorizontal="10dp"
+            android:id="@+id/confirm_password_et"
+            android:inputType="textPassword"
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            style="@style/DefaultInput"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            style="@style/InputLabel"/>
+
+        <EditText
+            android:paddingHorizontal="10dp"
+            android:id="@+id/email_et"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            style="@style/DefaultInput"/>
+
+        <Button
+            android:id="@+id/signup_btn"
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Sign Up"
+            style="@style/DefaultButton"/>
+
+    </LinearLayout>
+</layout>
