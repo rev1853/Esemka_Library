@@ -49,13 +49,17 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        val box = StorageBox(this)
-        if(box.get("token", String::class.java) == null){
+        StorageBox.initGlobal(this)
+
+        if(StorageBox.global!!.get("token", String::class.java) == null){
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
         }
+
+        val email: String? = StorageBox.global!!.get("email", String::class.java)
+        if(email != null) StorageBox.initUser(email, this)
     }
 
     private fun setBottomTabItems(){

@@ -15,7 +15,6 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class Service<B>(
-    private val ctx: Context,
     private val url: String,
     private val method: String,
     private val returnType: Class<B>
@@ -29,17 +28,17 @@ class Service<B>(
 
     private val email: String?
         get() {
-            return StorageBox(ctx).get("email", String::class.java)
+            return StorageBox.global!!.get("email", String::class.java)
         }
 
     private val password: String?
         get() {
-            return StorageBox(ctx).get("password", String::class.java)
+            return StorageBox.global!!.get("password", String::class.java)
         }
 
     private val token: String?
         get() {
-            return StorageBox(ctx).get("token", String::class.java)
+            return StorageBox.global!!.get("token", String::class.java)
         }
 
     fun setOnResponse(onResponse: OnResponse<B>){
@@ -55,15 +54,13 @@ class Service<B>(
     }
 
     private fun refreshToken(){
-        val service: Service<JSONObject> = Services(ctx).login(LoginDTO(email!!, password!!))
+        val service: Service<JSONObject> = Services.login(LoginDTO(email!!, password!!))
 
         service.setOnResponse { res, conn ->
             if(conn.responseCode == 200){
-                val box = StorageBox(ctx)
-                val editor: SharedPreferences.Editor = box.editor
-                editor.putString("token", res!!.getString("token"))
-                editor.commit()
-
+                StorageBox.global!!.edit {
+                    putString("token", res!!.getString("token"))
+                }
                 reExecute()
             }
         }
@@ -72,7 +69,7 @@ class Service<B>(
     }
 
     private fun reExecute(){
-        val service = Service(ctx, url, method, returnType)
+        val service = Service(url, method, returnType)
         if(onStart != null) service.setOnStart(onStart!!)
         if(onPrepare != null) service.setOnPrepare(onPrepare!!)
         if(onResponse != null) service.setOnResponse(onResponse!!)
@@ -88,6 +85,7 @@ class Service<B>(
         }
 
         if(token != null){
+            Log.d("NETWORK", "token: $token")
             conn.setRequestProperty("Authorization", "Bearer $token")
         }
 
@@ -102,7 +100,7 @@ class Service<B>(
         conn = prepareConnection()
         conn = onPrepare?.handle(conn) ?: conn
 
-        val inputStream: InputStream = if(conn.responseCode == 200) conn.inputStream else conn.errorStream
+        val inputStream: InputStream = if(conn.responseCode in 200 until 300) conn.inputStream else conn.errorStream
         val bufferReader = BufferedReader(InputStreamReader(inputStream))
 
         val responseString: StringBuilder = StringBuilder()
@@ -117,7 +115,7 @@ class Service<B>(
     }
 
     override fun onPostExecute(result: String?) {
-        Log.d("NETWORK", "url: $url")
+        Log.d("NETWORK", "$method: $url")
         Log.d("NETWORK", "result: $result")
 
         if(conn.responseCode == 401 && email != null && password != null){
@@ -150,9 +148,5 @@ class Service<B>(
 
     fun interface OnStart {
         fun handle()
-    }
-
-    fun interface OnPrepareReturnValue {
-        fun handle(conn: HttpURLConnection)
     }
 }

@@ -57,7 +57,7 @@ class BookDetailFragment : Fragment() {
     private fun fetchBook(){
         val ctx: Context = binding.root.context
         val dialog: ProgressDialog = Dialogs.loading(ctx)
-        val service: Service<JSONObject> = Services(ctx).findBook(id)
+        val service: Service<JSONObject> = Services.findBook(id)
 
         service.setOnStart {
             dialog.show()
@@ -82,8 +82,7 @@ class BookDetailFragment : Fragment() {
     }
 
     private fun addBookToCart(){
-        val box = StorageBox(binding.root.context)
-        var selectedBooks: String = box.get("cart", String::class.java) ?: ""
+        var selectedBooks: String = StorageBox.user!!.get("cart", String::class.java) ?: ""
         var cart = mutableListOf<String>()
 
         if(selectedBooks.isNotBlank()){
@@ -97,9 +96,9 @@ class BookDetailFragment : Fragment() {
 
         cart.add(id)
         selectedBooks = cart.joinToString(",")
-        box.editor
-            .putString("cart", selectedBooks)
-            .commit()
+        StorageBox.user!!.edit {
+            putString("cart", selectedBooks)
+        }
 
         Toast.makeText(binding.root.context, "Book has been added to cart", Toast.LENGTH_SHORT).show()
 

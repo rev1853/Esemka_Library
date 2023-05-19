@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
     private fun submit(){
         val dialog = Dialogs.loading(this)
         val data: LoginDTO = loginData
-        val service: Service<JSONObject> = Services(this).login(data)
+        val service: Service<JSONObject> = Services.login(data)
 
         service.setOnStart{
             dialog.show()
@@ -52,12 +52,12 @@ class LoginActivity : AppCompatActivity() {
         service.setOnResponse { res, conn ->
             dialog.dismiss()
             if(conn.responseCode == 200){
-                val box = StorageBox(this)
-                val editor: Editor = box.editor
-                editor.putString("token", res!!.getString("token"))
-                editor.putString("email", data.email)
-                editor.putString("password", data.password)
-                editor.commit()
+                StorageBox.global!!.edit {
+                    putString("token", res!!.getString("token"))
+                    putString("email", data.email)
+                    putString("password", data.password)
+                }
+                StorageBox.initUser(data.email, this)
 
                 Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show()
 

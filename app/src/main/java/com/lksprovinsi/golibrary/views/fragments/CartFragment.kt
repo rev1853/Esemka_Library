@@ -34,8 +34,7 @@ class CartFragment : Fragment() {
 
     private val cartStrs: List<String>
         get() {
-            val box = StorageBox(binding.root.context)
-            val cart: String = box.get("cart", String::class.java) ?: ""
+            val cart: String = StorageBox.user!!.get("cart", String::class.java) ?: ""
             return if (cart.isBlank()) listOf() else cart.split(",")
         }
 
@@ -66,7 +65,7 @@ class CartFragment : Fragment() {
 
     private fun fetchBook(index: Int){
         val ctx: Context = binding.root.context
-        val service: Service<JSONObject> = Services(ctx).findBook(cartStrs[index])
+        val service: Service<JSONObject> = Services.findBook(cartStrs[index])
 
         service.setOnStart{
             if(!dialog.isShowing) dialog.show()
@@ -117,10 +116,9 @@ class CartFragment : Fragment() {
     private fun removeCartItem(item: BookDTO){
         val items = cartStrs.toMutableList()
         items.remove(item.id)
-        StorageBox(binding.root.context)
-            .editor
-            .putString("cart", items.joinToString(","))
-            .commit()
+        StorageBox.user!!.edit {
+            putString("cart", items.joinToString(","))
+        }
         Toast.makeText(binding.root.context, "Item ${item.name} has been removed", Toast.LENGTH_SHORT).show()
     }
 
@@ -164,7 +162,7 @@ class CartFragment : Fragment() {
         val endDate: Calendar = parseDate(binding.endDateTv.text.toString())
 
         val borrowingData = BorrowingDTO(formatter.format(startDate.time), formatter.format(endDate.time), cartStrs)
-        val service: Service<JSONObject> = Services(binding.root.context).borrowing(borrowingData)
+        val service: Service<JSONObject> = Services.borrowing(borrowingData)
 
         service.setOnStart {
             dialog.show()
@@ -173,10 +171,9 @@ class CartFragment : Fragment() {
         service.setOnResponse{ _, conn ->
             dialog.dismiss()
             if(conn.responseCode == 200){
-                StorageBox(binding.root.context)
-                    .editor
-                    .remove("cart")
-                    .commit()
+                StorageBox.user!!.edit {
+                    remove("cart")
+                }
                 Toast.makeText(binding.root.context, "Booking success", Toast.LENGTH_LONG).show()
                 loadAllBooks()
             }else{

@@ -59,7 +59,7 @@ class HomeFragment : Fragment() {
     private fun loadBooks(){
         val ctx: Context = binding.root.context
         val dialog: ProgressDialog = Dialogs.loading(ctx)
-        val service: Service<JSONArray> = Services(ctx).getBooks(binding.searchTv.text.toString())
+        val service: Service<JSONArray> = Services.getBooks(binding.searchTv.text.toString())
 
         service.setOnStart {
             dialog.show()

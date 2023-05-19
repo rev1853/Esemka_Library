@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.AsyncTask
+import android.util.Log
 import android.widget.ImageView
 import com.lksprovinsi.golibrary.R
 import java.io.File
@@ -15,47 +16,28 @@ import java.net.URL
 class ImageHelper {
     companion object{
         fun loadImage(url: String, imageView: ImageView){
-            val fetcher = ImageFetcher(imageView.context, url)
-
-            fetcher.setOnResponse {
-                if(it != null){
-                    val bitmap = BitmapFactory.decodeStream(it)
-                    imageView.setImageBitmap(bitmap)
-                }else{
-                    imageView.setImageResource(R.drawable.default_image_profile)
-                }
-            }
-
+            val fetcher = ImageFetcher(url, imageView)
             fetcher.execute()
         }
     }
 
-    class ImageFetcher(val ctx: Context, private val url: String): AsyncTask<String, Void, InputStream?>() {
+    class ImageFetcher(private val url: String, private val image: ImageView): AsyncTask<String, Void, Unit>() {
 
-        private var onResponse: OnResponse? = null
-
-        fun setOnResponse(onResponse: OnResponse){
-            this.onResponse = onResponse
-        }
-
-        override fun doInBackground(vararg params: String?): InputStream? {
+        override fun doInBackground(vararg params: String?) {
             val conn: HttpURLConnection = URL(url).openConnection() as HttpURLConnection
             conn.requestMethod = "GET"
 
-            val token: String = StorageBox(ctx).get("token", String::class.java)!!
-            conn.setRequestProperty("Authorization", token)
+            val token: String = StorageBox.global!!.get("token", String::class.java)!!
+            conn.setRequestProperty("Authorization", "Bearer $token")
 
             val resCode = conn.responseCode
 
-             return if(resCode == 200) conn.inputStream else null
-        }
-
-        override fun onPostExecute(result: InputStream?) {
-            onResponse?.handle(result)
-        }
-
-        fun interface OnResponse {
-            fun handle(inputStream: InputStream?)
+            if(resCode == 200){
+                val bitmap = BitmapFactory.decodeStream(conn.inputStream)
+                image.setImageBitmap(bitmap)
+            }else{
+                image.setImageResource(R.drawable.default_image_profile)
+            }
         }
     }
 }

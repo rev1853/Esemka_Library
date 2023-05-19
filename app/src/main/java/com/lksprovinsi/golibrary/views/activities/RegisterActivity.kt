@@ -61,7 +61,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun submit(){
         val dialog = Dialogs.loading(this)
         val data: RegisterDTO = registerData ?: return
-        val service: Service<JSONObject> = Services(this).register(data)
+        val service: Service<JSONObject> = Services.register(data)
 
         service.setOnStart{
             dialog.show()

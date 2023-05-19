@@ -45,7 +45,7 @@ class HistoryDetailFragment : Fragment() {
 
     private fun fetchHistory(){
         val dialog: ProgressDialog = Dialogs.loading(requireContext())
-        val service = Services(requireContext()).historyDetail(id)
+        val service = Services.historyDetail(id)
 
         service.setOnStart{
             dialog.show()
